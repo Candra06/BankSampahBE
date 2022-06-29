@@ -23,6 +23,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgotPassword', [AuthController::class, 'forgotPassword']);
 Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
 
+Route::get('/listWilayah', [WilayahController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function ()
 {
     Route::post('/updateProfil', [AuthController::class, 'updateProfil']);
