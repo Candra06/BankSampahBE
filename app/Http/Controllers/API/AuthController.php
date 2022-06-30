@@ -17,12 +17,14 @@ class AuthController extends Controller
                     'username' => 'required',
                     'email' => 'required|unique:users',
                     'password' => 'required',
+                    'wilayah' => 'required',
                 ]
             );
 
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
+                'wilayah' => $request->wilayah,
                 'password' => bcrypt($request->password),
                 'point' => 0,
                 'role' => 'User'
