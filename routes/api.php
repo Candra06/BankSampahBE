@@ -4,7 +4,9 @@ use App\Http\Controllers\API\ArtikelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PengumpulanSampahController;
 use App\Http\Controllers\API\WilayahController;
+use App\Models\PengumpulanSampah;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -27,6 +29,7 @@ Route::get('/listWilayah', [WilayahController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function ()
 {
     Route::post('/updateProfil', [AuthController::class, 'updateProfil']);
+    Route::get('/dashboard', [AuthController::class, 'dashboard']);
     // CRUD Artikel
     Route::prefix('artikel')->group(function() {
         Route::get('/list', [ArtikelController::class, 'index']);
@@ -45,5 +48,16 @@ Route::middleware('auth:sanctum')->group(function ()
         Route::get('/delete/{id}', [WilayahController::class, 'destroy']);
     });
 
-    
+    // pengumpulan sampah
+    Route::prefix('pengumpulan')->group(function() {
+        Route::get('/history', [PengumpulanSampahController::class, 'index']);
+        Route::post('/create', [PengumpulanSampahController::class, 'store']);
+    });
+
+     // pengumpulan sampah
+     Route::prefix('user')->group(function() {
+        Route::get('/list', [AuthController::class, 'index']);
+        Route::post('/create', [AuthController::class, 'addUser']);
+        Route::post('/update/{id}', [AuthController::class, 'update']);
+    });
 });
