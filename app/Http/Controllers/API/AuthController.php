@@ -198,7 +198,9 @@ class AuthController extends Controller
     public function index()
     {
         try {
-            $data = User::all();
+            $data = User::leftJoin('wilayah', 'wilayah.id', 'users.wilayah_id')
+            ->select('users.*', 'wilayah.nomor_rw')
+            ->get();
             return response()->json([
                 'status_code' => 200,
                 'data' => $data
