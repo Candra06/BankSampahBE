@@ -222,7 +222,7 @@ class AuthController extends Controller
             $request->validate(
                 [
                     'username' => 'required',
-                    'email' => 'required|unique:users',
+                    'email' => 'required',
                     'wilayah' => 'required',
                     'role' => 'required',
                 ]
