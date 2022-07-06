@@ -57,7 +57,7 @@ class PengumpulanSampahController extends Controller
             ]);
             
             $user = User::where('id', $request->user_id)->first();
-            $newPoin = $user->point + $request->jumlah;
+            $newPoin = $user->point - $request->jumlah;
 
             User::where('id', $user->id)->update(['point' => $newPoin]);
 
