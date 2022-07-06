@@ -48,12 +48,25 @@ class PengumpulanSampahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function editPoin(Request $request)
     {
         try {
-            //code...
+            $request->validate([
+                'user_id' => 'required',
+                'jumlah' => 'required'
+            ]);
+            
+            $user = User::where('id', $request->user_id)->first();
+            $newPoin = $user->point + $request->jumlah;
+
+            User::where('id', $user->id)->update(['point' => $newPoin]);
+
+            return response()->json([
+                'status_code' => 200,
+                'data' => 'Success'
+            ]);
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
     }
 

@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::prefix('pengumpulan')->group(function() {
         Route::get('/history', [PengumpulanSampahController::class, 'index']);
         Route::post('/create', [PengumpulanSampahController::class, 'store']);
+        Route::post('/updatePoin', [PengumpulanSampahController::class, 'editPoin']);
     });
 
      // pengumpulan sampah
