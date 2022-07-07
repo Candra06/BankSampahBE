@@ -223,17 +223,19 @@ class AuthController extends Controller
                 [
                     'username' => 'required',
                     'email' => 'required',
-                    'wilayah' => 'required',
                     'role' => 'required',
                 ]
             );
             if ($request->password) {
                 $update['password'] = bcrypt($request->password);
             }
+            if ($request->wilayah) {
+                $update['wilayah_id'] = $request->wilayah;
+            }
             $update = ([
                 'username' => $request->username,
                 'email' => $request->email,
-                'wilayah_id' => $request->wilayah,
+                
                 'role' => $request->role
             ]);
 
