@@ -314,7 +314,7 @@ class AuthController extends Controller
                 'data' => $data
             ]);
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
     }
 }
