@@ -199,8 +199,9 @@ class AuthController extends Controller
     {
         try {
             $data = User::leftJoin('wilayah', 'wilayah.id', 'users.wilayah_id')
-            ->select('users.*', 'wilayah.nomor_rw')
-            ->get();
+                ->select('users.*', 'wilayah.nomor_rw')
+                ->where('users.wilayah_id', Auth::user()->wilayah_id)
+                ->get();
             return response()->json([
                 'status_code' => 200,
                 'data' => $data
@@ -235,7 +236,7 @@ class AuthController extends Controller
             $update = ([
                 'username' => $request->username,
                 'email' => $request->email,
-                
+
                 'role' => $request->role
             ]);
 
@@ -260,15 +261,19 @@ class AuthController extends Controller
                 ->limit(3)->get();
             $data['terbaik'] = $terbaik;
             if (Auth::user()->role == 'User') {
+                $poin = Auth::user()->point;
+                $pengumpulan = PengumpulanSampah::where('user_id', Auth::user()->id)
+                    ->sum('jumlah');
                 $harian = PengumpulanSampah::where('user_id', Auth::user()->id)
                     ->whereDate('created_at', Carbon::now())
                     ->sum('jumlah');
                 $mingguan = PengumpulanSampah::where('user_id', Auth::user()->id)
                     ->whereBetween('created_at', [
-                        Carbon::parse('last monday')->startOfWeek(),
-                        Carbon::parse('next friday')->endOfWeek(),
+                        Carbon::now()->subDays(7),
+                        Carbon::now()
                     ])
                     ->sum('jumlah');
+
                 $bulanan = PengumpulanSampah::where('user_id', Auth::user()->id)
                     ->whereMonth('created_at', Carbon::now())
                     ->sum('jumlah');
@@ -287,11 +292,22 @@ class AuthController extends Controller
                     'rw' => $rw / 1000,
                     'all' => $all / 1000,
                 ]);
+                $data['point'] = $poin;
+                $data['pengumpulan'] = $pengumpulan;
                 $data['kontribusi'] = $kontribusi;
                 $data['wilayah'] = $wilayah;
-                
             } else {
-                # code...
+                $rw = PengumpulanSampah::leftJoin('users', 'users.id', 'pengumpulan_sampah.user_id')
+                    ->where('users.wilayah_id', Auth::user()->wilayah_id)
+                    ->whereDate('pengumpulan_sampah.created_at', Carbon::now())
+                    ->sum('pengumpulan_sampah.jumlah');
+                $all = PengumpulanSampah::whereDate('created_at', Carbon::now())
+                    ->sum('jumlah');
+                $wilayah = ([
+                    'rw' => $rw / 1000,
+                    'all' => $all / 1000,
+                ]);
+                $data['wilayah'] = $wilayah;
             }
             return response()->json([
                 'status_code' => 200,
