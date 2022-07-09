@@ -280,7 +280,7 @@ class AuthController extends Controller
                 $kontribusi = ([
                     'harian' => $harian / 1000,
                     'mingguan' => $mingguan / 1000,
-                    'bualan' => $bulanan / 1000,
+                    'bulanan' => $bulanan / 1000,
                 ]);
                 $rw = PengumpulanSampah::leftJoin('users', 'users.id', 'pengumpulan_sampah.user_id')
                     ->where('users.wilayah_id', Auth::user()->wilayah_id)
