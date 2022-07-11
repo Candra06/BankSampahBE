@@ -261,8 +261,9 @@ class AuthController extends Controller
                 ->orderBy('jumlah', 'DESC')
                 ->limit(3)->get();
                 foreach ($tmpterbaik as $dt) {
-                    $terbaik['username'] = $dt['username'];
-                    $terbaik['jumlah'] = number_format((float)$dt['jumlah'] / 1000, 2 , '.','');
+                    $tmp['username'] = $dt['username'];
+                    $tmp['jumlah'] = number_format((float)$dt['jumlah'] / 1000, 2 , '.','');
+                    array_push($terbaik, $tmp);
                 }
                 
             $data['terbaik'] = $terbaik;
