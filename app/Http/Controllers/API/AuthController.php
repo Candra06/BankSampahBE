@@ -254,11 +254,17 @@ class AuthController extends Controller
     {
         try {
             $data = [];
-            $terbaik = PengumpulanSampah::leftJoin('users', 'users.id', 'pengumpulan_sampah.user_id')
+            $terbaik = [];
+            $tmpterbaik = PengumpulanSampah::leftJoin('users', 'users.id', 'pengumpulan_sampah.user_id')
                 ->select('users.username', DB::raw('SUM(pengumpulan_sampah.jumlah) as jumlah'))
                 ->groupBy('users.id')
                 ->orderBy('jumlah', 'DESC')
                 ->limit(3)->get();
+                foreach ($tmpterbaik as $dt) {
+                    $terbaik['username'] = $dt['username'];
+                    $terbaik['jumlah'] = number_format((float)$dt['jumlah'] / 1000, 2 , '.','');
+                }
+                
             $data['terbaik'] = $terbaik;
             if (Auth::user()->role == 'User') {
                 $poin = Auth::user()->point;
