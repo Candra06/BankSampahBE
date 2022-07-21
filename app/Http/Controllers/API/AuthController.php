@@ -265,7 +265,7 @@ class AuthController extends Controller
                     $tmp['jumlah'] = number_format((float)$dt['jumlah'] / 1000, 2 , '.','');
                     array_push($terbaik, $tmp);
                 }
-                
+
             $data['terbaik'] = $terbaik;
             if (Auth::user()->role == 'User') {
                 $poin = Auth::user()->point;
@@ -321,7 +321,10 @@ class AuthController extends Controller
                 'data' => $data
             ]);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);
         }
     }
 }

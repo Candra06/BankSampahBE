@@ -42,7 +42,10 @@ class WilayahController extends Controller
                 'message' => 'Success'
             ]);
         } catch (\Throwable $th) {
-            return $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]); return $th;
         }
     }
     /**
@@ -69,7 +72,10 @@ class WilayahController extends Controller
                 'message' => 'Success'
             ]);
         } catch (\Throwable $th) {
-            return $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);return $th;
         }
     }
 
@@ -82,7 +88,10 @@ class WilayahController extends Controller
                 'data' => $data
             ]);
         } catch (\Throwable $th) {
-            return $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);return $th;
         }
     }
 
@@ -101,7 +110,10 @@ class WilayahController extends Controller
                 'message' => 'Success'
             ]);
         } catch (\Throwable $th) {
-            return $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);
         }
     }
 }

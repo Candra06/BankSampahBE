@@ -39,7 +39,10 @@ class PengumpulanSampahController extends Controller
                 'data' => $data
             ]);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);
         }
     }
 
@@ -55,10 +58,10 @@ class PengumpulanSampahController extends Controller
                 'user_id' => 'required',
                 'jumlah' => 'required'
             ]);
-            
+
             $user = User::where('id', $request->user_id)->first();
             $newPoin = $user->point - $request->jumlah;
-            
+
             User::where('id', $user->id)->update(['point' => $newPoin]);
 
             return response()->json([
@@ -66,7 +69,10 @@ class PengumpulanSampahController extends Controller
                 'data' => 'Success'
             ]);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);
         }
     }
 
@@ -101,7 +107,10 @@ class PengumpulanSampahController extends Controller
                 'data' => 'Success'
             ]);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json([
+                'status_code' => 403,
+                'message' => $th
+            ]);
         }
     }
 
