@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        return $request;
+        
         try {
             $request->validate(
                 [
@@ -162,7 +162,7 @@ class AuthController extends Controller
 
     public function addUser(Request $request)
     {
-        return $request;
+
         try {
             $request->validate(
                 [
