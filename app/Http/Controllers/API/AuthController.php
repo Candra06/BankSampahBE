@@ -14,12 +14,12 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        
+
         try {
             $request->validate(
                 [
                     'username' => 'required',
-                    'email' => 'required|unique:users',
+                    'email' => 'required',
                     'password' => 'required',
                     'wilayah' => 'required',
                 ]
@@ -167,7 +167,7 @@ class AuthController extends Controller
             $request->validate(
                 [
                     'username' => 'required',
-                    'email' => 'required|unique:users',
+                    'email' => 'required',
                     'password' => 'required',
                     'wilayah' => 'required',
                     'role' => 'required',
