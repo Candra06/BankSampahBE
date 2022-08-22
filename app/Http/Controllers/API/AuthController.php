@@ -161,6 +161,7 @@ class AuthController extends Controller
 
     public function addUser(Request $request)
     {
+        return $request;
         try {
             $request->validate(
                 [
