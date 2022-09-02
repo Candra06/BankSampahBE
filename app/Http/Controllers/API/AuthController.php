@@ -55,13 +55,6 @@ class AuthController extends Controller
                 'username' => 'required',
                 'password' => 'required'
             ]);
-            $credentials = request(['username', 'password']);
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Unauthorized'
-                ]);
-            }
 
             $user = User::where('username', $request->username)->first();
             if ($user) {
