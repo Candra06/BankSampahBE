@@ -221,8 +221,6 @@ class AuthController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
         try {
             $request->validate(
                 [
@@ -231,19 +229,18 @@ class AuthController extends Controller
                     'role' => 'required',
                 ]
             );
+
+            $update = ([
+                'username' => $request->username,
+                'email' => $request->email,
+                'role' => $request->role
+            ]);
             if ($request->password) {
                 $update['password'] = bcrypt($request->password);
             }
             if ($request->wilayah) {
                 $update['wilayah_id'] = $request->wilayah;
             }
-            $update = ([
-                'username' => $request->username,
-                'email' => $request->email,
-
-                'role' => $request->role
-            ]);
-
             User::where('id', $id)->update($update);
             return response()->json([
                 'status_code' => 200,
