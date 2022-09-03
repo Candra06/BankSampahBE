@@ -138,13 +138,22 @@ class AuthController extends Controller
                 $input['password'] = bcrypt($request->password);
             }
             $data = User::where('id', Auth::user()->id)->update($input);
-            return $data;
+            if ($data) {
+                $user = User::where('id', Auth::user()->id)->first();
+                return response()->json([
+                    'status_code' => 200,
+                    'message' => 'Success',
+                    'data' => $user,
+                ]);
+            } else {
+                return response()->json([
+                    'status_code' => 401,
+                    'message' => 'Failed update profile',
+                    'data' => $data,
+                ]);
+            }
 
-            return response()->json([
-                'status_code' => 200,
-                'message' => 'Success',
-                'data' => $data,
-            ]);
+
         } catch (\Throwable $th) {
             return response()->json([
                 'status_code' => 401,
